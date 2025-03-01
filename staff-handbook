@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Angeles Roleplay Staff Handbook</title>
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --accent-color: #7b68ee;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --card-bg: #1e1e1e;
+            --header-height: 70px;
+            --sidebar-width: 250px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--darker-bg);
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .container {
+            display: flex;
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--darker-bg);
+            padding: 2rem 0;
+            position: fixed;
+            left: 0;
+            top: var(--header-height);
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding-left: calc(2rem - 4px);
+        }
+
+        .nav-item.active {
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            margin-left: var(--sidebar-width);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: white;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+            color: white;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        ol, ul {
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .accent {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .note {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #333;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background-color: rgba(123, 104, 238, 0.1);
+            font-weight: 600;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #2a2a2a;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .command-block {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .command {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .command:last-child {
+            margin-bottom: 0;
+        }
+
+        .emoji {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* For mobile responsiveness */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+            }
+            
+            .content {
+                margin-left: 0;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Los Angeles <span>Roleplay</span> Staff Handbook</div>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="nav-item" onclick="showPage('staff-rules')">
+                <i class="fas fa-book"></i> Staff Rules
+            </div>
+            <div class="nav-item" onclick="showPage('training-guide')">
+                <i class="fas fa-graduation-cap"></i> Training Guide
+            </div>
+            <div class="nav-item active" onclick="showPage('sts-guide')">
+                <i class="fas fa-bullhorn"></i> STS Guide
+            </div>
+            <div class="nav-item" onclick="showPage('placeholder1')">
+                <i class="fas fa-shield-alt"></i> Moderation Guide
+            </div>
+            <div class="nav-item" onclick="showPage('placeholder2')">
+                <i class="fas fa-users"></i> Team Structure
+            </div>
+            <div class="nav-item" onclick="showPage('placeholder4')">
+                <i class="fas fa-clipboard-list"></i> Guidelines & Procedures
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="staff-rules" class="page">
+                <h1>Staff Rules</h1>
+                
+                <div class="card">
+                    <h2>General Conduct</h2>
+                    <p><span class="accent">SPaG (Spelling, Grammar and Punctuation)</span> is required while on-duty, if you choose to disregard this rule you will be striked.</p>
+                    
+                    <ol>
+                        <li>You are not allowed to use off-duty commands unless you got perms from <span class="accent">@Executive Ownership+</span>, if you use off-duty commands you will also be striked.</li>
+                        <li>You are allowed to kick/ban off-duty if there is no staff online.</li>
+                        <li>You are not allowed to roleplay on-duty, you will receive a warning if you are caught roleplaying on-duty.</li>
+                        <li>The command <span class="accent">:h</span> are restricted to Admin+ and the command <span class="accent">:m</span> are restricted to Director+.</li>
+                        <li>You must always remain professional and use SPaG in public chats.</li>
+                        <li>Everyone are required to use their uniform or the "Main Staff Uniform", if your team doesn't have a uniform please use the team under your teams uniform.</li>
+                        <li>Your name should take use of this guide: <span class="accent">&lt;Rank&gt; | &lt;Your name&gt; | &lt;Your timezone (Optional)&gt;</span>.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="training-guide" class="page">
+                <h1>Training Guide</h1>
+                
+                <div class="card">
+                    <h2>Before the Training</h2>
+                    <p>The following requirements must be met before beginning the training process:</p>
+                    
+                    <ul>
+                        <li>Trainees must use SPaG (Spelling, Punctuation, and Grammar) at all times. If you have to remind them 3+ times, they must be disqualified.</li>
+                        <li>Trainees must join the Sheriff team, put on the "Staff trainee" uniform, and sit in the waiting room until you arrive.</li>
+                    </ul>
+                    
+                    <h3>Training Rules Agreement</h3>
+                    <p>Trainees must agree to these rules before proceeding:</p>
+                    
+                    <ul>
+                        <li>You are not allowed to use the <span class="accent">:m</span> or <span class="accent">:h</span> command for any reasons.</li>
+                        <li>You are not allowed to ping OT in our comms server, please DM them instead.</li>
+                        <li>You must know the ingame rules while moderating, look at the punishment guide for more information.</li>
+                        <li>You are not allowed to use commands off-duty, this is a fireable offense.</li>
+                    </ul>
+                    
+                    <p class="note">If trainees are found not following any of these rules, they will be punished. If they have no questions, you may proceed with the training.</p>
+                </div>
+                
+                <div class="card">
+                    <h2>Knowledge Assessment</h2>
+                    <p>Trainees have a maximum of 20 minutes to answer the following questions:</p>
+                    
+                    <ol>
+                        <li>What is RDM?</li>
+                        <li>What is Shift Grinding?</li>
+                        <li>Are you able to use your commands while off-duty?</li>
+                        <li>When you see an exploiter ingame, what would you do?</li>
+                        <li>What is LTAP?</li>
+                        <li>What is Staff Evasion?</li>
+                        <li>What is Cuff rushing?</li>
+                        <li>Are you allowed to use :h?</li>
+                        <li>What is tool abuse?</li>
+                        <li>What is the banned roleplays in our server? <span class="accent">Hint: SST</span></li>
+                        <li>Are you allowed to be roleplaying while on-duty?</li>
+                    </ol>
+                    
+                    <div class="divider"></div>
+                    
+                    <h3>Assessment Results</h3>
+                    <p><span class="accent">If they pass:</span> "Congratulations, you have passed the training part of your training!"</p>
+                    <p><span class="accent">If they fail:</span> "I'm sorry but you have failed the training part, don't worry you have 1 attempt left to try again."</p>
+                </div>
+                
+                <div class="card">
+                    <h2>Ride Along (R/A)</h2>
+                    <p>The final phase of training involves a practical assessment:</p>
+                    
+                    <ul>
+                        <li>High ranking team+ are allowed to host R/As.</li>
+                        <li>The trainee is required to do 15 mod calls (HR teleports them around).</li>
+                        <li>The R/A must last at least 1 hour.</li>
+                    </ul>
+                    
+                    <h3>Evaluation Criteria</h3>
+                    <p>The trainee is evaluated on the following criteria:</p>
+                    
+                    <table>
+                        <tr>
+                            <th>Criteria</th>
+                            <th>Points Range</th>
+                        </tr>
+                        <tr>
+                            <td>SPaG</td>
+                            <td>1 - 3 points</td>
+                        </tr>
+                        <tr>
+                            <td>Handling mod calls</td>
+                            <td>1 - 4 points</td>
+                        </tr>
+                        <tr>
+                            <td>Professionalism</td>
+                            <td>1 - 3 points</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>Grading</h3>
+                    <p><span class="accent">Passing grade:</span> 7 - 10 points</p>
+                    <p><span class="accent">Failing grade:</span> 1 - 6 points</p>
+                    
+                    <p class="note">If trainees fail, they have 1 attempt to redo the R/A.</p>
+                </div>
+            </div>
+            
+            <div id="sts-guide" class="page active">
+                <h1>STS Guide</h1>
+                
+                <div class="card">
+                    <h2>Staff Team-Speak (STS) Procedure</h2>
+                    
+                    <p>This is the official sequence of commands to use when hosting an STS. Follow these steps in order:</p>
+                    
+                    <div class="command-block">
+                        <div class="command">
+                            <span class="emoji">📗</span> <code>:m 📗I An STS is coming soon, please wrap up all roleplays and be prepared to be TP'ed.</code>
+                        </div>
+                        <div class="command">
+                            <code>:load others x2</code>
+                        </div>
+                        <div class="command">
+                            <code>:bring others x2</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">⌛</span> <code>:m ⌛ | Please STS on the yellow lines, failure to do so will result in a kick from the game! Don't use any emotes or animations.</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🌴</span> <code>:m 🌴The Los Angeles Roleplay Staff team has decided to host an STS to improve the roleplay experience and ensure that everybody is aware of our rules! 🌴</code>
+                        </div>
+                        <div class="command">
+                            <code>:m We will now go over our rules:</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🦺</span> <code>:m 🦺 | Fail roleplay is not allowed and will result in Moderation from our Staff Team! Please don't do anything that you wouldn't be able to do in real life!</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🙍</span> <code>:m 🙍 | Unrealistic Avatar, you must have a realistic character, Unrealistic characters are not allowed!</code>
+                        </div>
+                        <div class="command">
+                            <code>:m An avatar check will now commence!</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🔫</span> <code>:m 🔫 | RDM is not allowed, shooting people randomly without any reason will result in a moderation!</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🚘</span> <code>:m 🚘 | VDM is not allowed, you are not allowed to randomly ram into cars nor people! Please note that crashing into other objects must be roleplayed and will be moderated!</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🚙</span> <code>:m 🚙 | GTA driving is not allowed, you must always roleplay while you're driving.</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🚔</span> <code>:m 🚔 | Evading staff, you must stop your vehicle when a staff member is trying to pull you over! You must also always yield for all staff members while driving.</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">🎫</span> <code>:m 🎫 If you need assistance please use the command !mod or open a ticket in our communications server regarding your issue.</code>
+                        </div>
+                        <div class="command">
+                            <span class="emoji">⌛</span> <code>:m ⌛| The STS is now dismissed, you will all be loaded!</code>
+                        </div>
+                        <div class="command">
+                            <code>:load all x2</code>
+                        </div>
+                    </div>
+                    
+                    <h3>Important Notes for STS Hosts</h3>
+                    <ul>
+                        <li>Maintain professionalism throughout the entire STS session</li>
+                        <li>Ensure you use proper SPaG in all messages</li>
+                        <li>Be prepared to answer questions from players after the STS</li>
+                        <li>Coordinate with other staff members to perform avatar checks efficiently</li>
+                        <li>Make sure all players are standing on the yellow lines before beginning</li>
+                    </ul>
+                    
+                    <p class="note">This STS guide has been tested and approved. Please follow it exactly as written to maintain consistency across all server announcements.</p>
+                </div>
+            </div>
+
+            <div id="placeholder1" class="page">
+                <h1>Moderation Guide</h1>
+                <div class="card">
+                    <h2>Coming Soon</h2>
+                    <p>This section will contain guidelines for moderating the Los Angeles Roleplay server.</p>
+                </div>
+            </div>
+
+            <div id="placeholder2" class="page">
+                <h1>Team Structure</h1>
+                <div class="card">
+                    <h2>Coming Soon</h2>
+                    <p>This section will outline the staff hierarchy and team organization.</p>
+                </div>
+            </div>
+
+            <div id="placeholder4" class="page">
+                <h1>Guidelines & Procedures</h1>
+                <div class="card">
+                    <h2>Coming Soon</h2>
+                    <p>This section will contain detailed procedures for various staff actions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Find and activate the clicked nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('onclick').includes(pageId)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
